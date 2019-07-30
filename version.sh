@@ -6,10 +6,8 @@
 set -e
 MAJMIN_VERSION="1.5"
 
-pushd $(dirname $0) >/dev/null
 working_dir=$PWD
-name=$(basename $PWD)
-popd >/dev/null
+name=$(basename "$PWD")
 package=$(echo $name | sed 's/-/_/g')
 version_json="${working_dir}/${package}/version.json"
 
@@ -42,11 +40,11 @@ fi
 version="${majmin_version:-$MAJMIN_VERSION}.${patch_version}${version_suffix}"
 json='"version": "'$version'", "commit": "'$(git rev-parse HEAD)'", "build": "'${BUILD_TAG:-"dev"}'"'
 # write-out version.json
-echo "{${json}}" > $version_json
+echo "{${json}}" > "$version_json"
 
 style="$1"
 if [[ "$style" = "json" ]]; then
-    cat $version_json
+    cat "$version_json"
 else
     echo $version
 fi
